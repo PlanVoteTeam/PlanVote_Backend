@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,4 +5,42 @@ generator client {
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
+}
+
+type EventsParticipants {
+  creneau     EventsParticipantsCreneau[]
+  destination EventsParticipantsDestination[]
+  id          String                          @db.ObjectId
+  name        String
+}
+
+type EventsParticipantsCreneau {
+  endDate   String
+  startDate String
+}
+
+type EventsParticipantsDestination {
+  name String
+  vote EventsParticipantsDestinationVote[]
+}
+
+type EventsParticipantsDestinationVote {
+  note        Int
+  participant String @db.ObjectId
+}
+
+model Events {
+  id           String               @id @default(auto()) @map("_id") @db.ObjectId
+  maxDuration  Int
+  minDuration  Int
+  name         String
+  participants EventsParticipants[]
+}
+
+model User {
+  id           String               @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  email String
+  password String
+  eventsStared String[] @db.ObjectId
 }
