@@ -34,11 +34,25 @@ export class EventsService {
     return eventFound;
   }
 
-  update(id: number, updateEventDto: UpdateEventDto) {
-    return `This action updates a #${id} event`;
+  async update(id: string, updateEventDto: UpdateEventDto) {
+    const eventUpdate = await this.eventModel.findOneAndUpdate(
+      {
+        _id: id,
+      },
+      {
+        $set: {
+          name: updateEventDto?.name,
+          minDuration: updateEventDto?.minDuration,
+          maxDuration: updateEventDto?.maxDuration,
+        },
+      },
+      { new: true },
+    );
+
+    return eventUpdate;
   }
 
-  remove(id: number) {
+  async remove(id: string) {
     return `This action removes a #${id} event`;
   }
 }
