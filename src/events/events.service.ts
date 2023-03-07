@@ -1,8 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
+import { EVENT_NOT_FOUND_ERROR_CODE } from './events.error-code';
+import { EVENT_NOT_FOUND_ERROR_MESSAGE } from './events.error-message';
 import { IEvent } from './interfaces/event.interface';
 
 @Injectable()
@@ -21,8 +23,15 @@ export class EventsService {
     return `This action returns all events`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} event`;
+  async findOne(id: string) {
+    const eventFound = await this.eventModel.findById(id);
+    if (!eventFound) {
+      throw new NotFoundException({
+        errorCode: EVENT_NOT_FOUND_ERROR_CODE,
+        errorMessage: EVENT_NOT_FOUND_ERROR_MESSAGE,
+      });
+    }
+    return eventFound;
   }
 
   update(id: number, updateEventDto: UpdateEventDto) {
