@@ -11,13 +11,16 @@ import { ParticipantsService } from './participants.service';
 import { CreateParticipantDto } from './dto/create-participant.dto';
 import { UpdateParticipantDto } from './dto/update-participant.dto';
 
-@Controller('participants')
+@Controller('events/:eventId/participants')
 export class ParticipantsController {
   constructor(private readonly participantsService: ParticipantsService) {}
 
   @Post()
-  create(@Body() createParticipantDto: CreateParticipantDto) {
-    return this.participantsService.create(createParticipantDto);
+  async create(
+    @Param('eventId') eventId: string,
+    @Body() createParticipantDto: CreateParticipantDto,
+  ) {
+    return this.participantsService.create(eventId, createParticipantDto);
   }
 
   @Get()
