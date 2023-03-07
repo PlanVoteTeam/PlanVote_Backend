@@ -15,4 +15,12 @@ describe('EventsService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+
+  describe('create an Event', () => {
+    it('should return event created', () => {
+      const eventCreated = {};
+
+      // jest.spyOn(service, 'create')
+    });
+  });
 });

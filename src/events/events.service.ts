@@ -10,13 +10,18 @@ import { IEvent } from './interfaces/event.interface';
 @Injectable()
 export class EventsService {
   constructor(@InjectModel('Event') private eventModel: Model<IEvent>) {}
-  create(createEventDto: CreateEventDto) {
-    const eventCreated = new this.eventModel({
+  async create(createEventDto: CreateEventDto): Promise<IEvent> {
+    const eventToCreate = new this.eventModel({
       name: createEventDto.name,
       minDuration: createEventDto.minDuration,
       maxDuration: createEventDto.maxDuration,
     });
-    return eventCreated.save();
+    const eventSaved = await eventToCreate.save();
+    return {
+      name: eventSaved.name,
+      minDuration: eventSaved.minDuration,
+      maxDuration: eventSaved.maxDuration,
+    };
   }
 
   findAll() {
