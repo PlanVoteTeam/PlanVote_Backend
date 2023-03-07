@@ -6,11 +6,12 @@ import { UpdateEventDto } from './dto/update-event.dto';
 import { EVENT_NOT_FOUND_ERROR_CODE } from './events.error-code';
 import { EVENT_NOT_FOUND_ERROR_MESSAGE } from './events.error-message';
 import { IEvent } from './interfaces/event.interface';
+import { Event } from './entities/event.entity';
 
 @Injectable()
 export class EventsService {
   constructor(@InjectModel('Event') private eventModel: Model<IEvent>) {}
-  async create(createEventDto: CreateEventDto): Promise<IEvent> {
+  async create(createEventDto: CreateEventDto): Promise<Event> {
     const eventToCreate = new this.eventModel({
       name: createEventDto.name,
       minDuration: createEventDto.minDuration,
