@@ -28,7 +28,7 @@ export class EventsService {
     return `This action returns all events`;
   }
 
-  async findOne(id: string) {
+  async findOne(id: string): Promise<IEvent> {
     const eventFound = await this.eventModel.findById(id);
     if (!eventFound) {
       throw new NotFoundException({
@@ -36,7 +36,12 @@ export class EventsService {
         errorMessage: EVENT_NOT_FOUND_ERROR_MESSAGE,
       });
     }
-    return eventFound;
+    return {
+      name: eventFound.name,
+      minDuration: eventFound.minDuration,
+      maxDuration: eventFound.maxDuration,
+      participants: eventFound.participants,
+    };
   }
 
   update(id: number, updateEventDto: UpdateEventDto) {
