@@ -12,12 +12,11 @@ import { Event } from './entities/event.entity';
 export class EventsService {
   constructor(@InjectModel('Event') private eventModel: Model<IEvent>) {}
   async create(createEventDto: CreateEventDto): Promise<Event> {
-    const eventToCreate = new this.eventModel({
+    const eventSaved = await this.eventModel.create({
       name: createEventDto.name,
       minDuration: createEventDto.minDuration,
       maxDuration: createEventDto.maxDuration,
     });
-    const eventSaved = await eventToCreate.save();
     return {
       name: eventSaved.name,
       minDuration: eventSaved.minDuration,
@@ -29,7 +28,7 @@ export class EventsService {
     return `This action returns all events`;
   }
 
-  async findOne(id: string): Promise<IEvent> {
+  async findOne(id: string): Promise<Event> {
     const eventFound = await this.eventModel.findById(id);
     if (!eventFound) {
       throw new NotFoundException({
@@ -45,6 +44,7 @@ export class EventsService {
     };
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   update(id: number, updateEventDto: UpdateEventDto) {
     return `This action updates a #${id} event`;
   }

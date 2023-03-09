@@ -33,6 +33,7 @@
     "rxjs": "^7.2.0"
   },
   "devDependencies": {
+    "@golevelup/ts-jest": "^0.3.5",
     "@nestjs/cli": "^8.0.0",
     "@nestjs/schematics": "^8.0.0",
     "@nestjs/testing": "^8.0.0",
@@ -70,6 +71,10 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleDirectories": [
+      "node_modules",
+      "."
+    ]
   }
 }
