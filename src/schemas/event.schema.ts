@@ -18,6 +18,7 @@ export const EventSchema = new mongoose.Schema<IEvent>({
       destinations: [
         {
           name: Schema.Types.String,
+          img: Schema.Types.String,
           votes: [
             {
               participant: Schema.Types.ObjectId,
