@@ -6,24 +6,29 @@ import { UpdateEventDto } from './dto/update-event.dto';
 import { EVENT_NOT_FOUND_ERROR_CODE } from './events.error-code';
 import { EVENT_NOT_FOUND_ERROR_MESSAGE } from './events.error-message';
 import { IEvent } from './interfaces/event.interface';
+import { Event } from './entities/event.entity';
 
 @Injectable()
 export class EventsService {
   constructor(@InjectModel('Event') private eventModel: Model<IEvent>) {}
-  create(createEventDto: CreateEventDto) {
-    const eventCreated = new this.eventModel({
+  async create(createEventDto: CreateEventDto): Promise<Event> {
+    const eventSaved = await this.eventModel.create({
       name: createEventDto.name,
       minDuration: createEventDto.minDuration,
       maxDuration: createEventDto.maxDuration,
     });
-    return eventCreated.save();
+    return {
+      name: eventSaved.name,
+      minDuration: eventSaved.minDuration,
+      maxDuration: eventSaved.maxDuration,
+    };
   }
 
   findAll() {
     return `This action returns all events`;
   }
 
-  async findOne(id: string) {
+  async findOne(id: string): Promise<Event> {
     const eventFound = await this.eventModel.findById(id);
     if (!eventFound) {
       throw new NotFoundException({
@@ -31,8 +36,14 @@ export class EventsService {
         errorMessage: EVENT_NOT_FOUND_ERROR_MESSAGE,
       });
     }
-    return eventFound;
+    return {
+      name: eventFound.name,
+      minDuration: eventFound.minDuration,
+      maxDuration: eventFound.maxDuration,
+      participants: eventFound.participants,
+    };
   }
+
 
   async update(id: string, updateEventDto: UpdateEventDto) {
     const eventUpdate = await this.eventModel.findOneAndUpdate(

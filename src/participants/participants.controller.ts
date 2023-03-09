@@ -34,11 +34,12 @@ export class ParticipantsController {
   }
 
   @Patch(':id')
-  update(
+  async update(
+    @Param('eventId') eventId: string,
     @Param('id') id: string,
     @Body() updateParticipantDto: UpdateParticipantDto,
   ) {
-    return this.participantsService.update(+id, updateParticipantDto);
+    return this.participantsService.update(eventId, id, updateParticipantDto);
   }
 
   @Delete(':id')

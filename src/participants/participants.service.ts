@@ -45,11 +45,62 @@ export class ParticipantsService {
     return `This action returns a #${id} participant`;
   }
 
-  update(id: number, updateParticipantDto: UpdateParticipantDto) {
-    return `This action updates a #${id} participant`;
+  async update(
+    eventId: string,
+    id: string,
+    updateParticipantDto: UpdateParticipantDto,
+  ) {
+    await this.checkParticipantName(eventId, updateParticipantDto.name);
+    const update = await this.eventModel.updateOne(
+      {
+        $and: [
+          {
+            _id: eventId,
+          },
+          {
+            'participants._id': id,
+          },
+        ],
+      },
+      {
+        $set: {
+          'participants.$.name': updateParticipantDto.name,
+        },
+      },
+      {
+        new: true,
+      },
+    );
+
+    return update;
   }
 
   remove(id: number) {
     return `This action removes a #${id} participant`;
+  }
+
+  private async checkParticipantName(eventId: string, nameToCheck: string) {
+    const isNameAlreadyUsed = await this.isParticipantNameAlreadyUsed(
+      eventId,
+      nameToCheck,
+    );
+    if (isNameAlreadyUsed) {
+      throw new ConflictException({
+        sucess: false,
+        errorCode: ERROR_CODE_PARTICIPANT_NAME_ALREADY_EXIST,
+        errorMessage: ERROR_MESSAGE_PARTICIPANT_NAME_ALREADY_EXIST,
+      });
+    }
+  }
+
+  private async isParticipantNameAlreadyUsed(
+    eventId: string,
+    nameToCheck: string,
+  ): Promise<boolean> {
+    const isParticipantExist = await this.eventModel.findOne({
+      _id: eventId,
+      'participants.name': nameToCheck,
+    });
+    return isParticipantExist !== null;
   }
 }
