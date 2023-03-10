@@ -44,8 +44,9 @@ describe('DestinationsService', () => {
         img: 'test',
         _id: 'a',
       };
-      const event: any = {
+      const event: IEvent = {
         name: 'test',
+        description: '',
         minDuration: 0,
         maxDuration: 0,
         participants: [
@@ -53,6 +54,7 @@ describe('DestinationsService', () => {
             _id: '1',
             name: 'Rémy',
             destinations: [destination],
+            timeSlots: [],
           },
         ],
       };
@@ -75,8 +77,9 @@ describe('DestinationsService', () => {
         img: 'test',
         _id: 'a',
       };
-      const event: any = {
+      const event: IEvent = {
         name: 'test',
+        description: '',
         minDuration: 0,
         maxDuration: 0,
         participants: [
@@ -84,6 +87,7 @@ describe('DestinationsService', () => {
             _id: '1',
             name: 'Rémy',
             destinations: [destination],
+            timeSlots: [],
           },
         ],
       };
@@ -97,6 +101,33 @@ describe('DestinationsService', () => {
       expect(
         service.create(eventId, participantId, createDestinationDto),
       ).rejects.toThrow(ConflictException);
+    });
+  });
+
+  describe('delete destination', () => {
+    it('should delete a destination from an event', async () => {
+      const eventId = '1';
+      const participantId = '1';
+      const id = 'a';
+      const event: IEvent = {
+        _id: '1',
+        description: '',
+        name: 'test',
+        minDuration: 0,
+        maxDuration: 0,
+        participants: [
+          {
+            _id: '1',
+            name: 'Rémy',
+            destinations: [],
+            timeSlots: [],
+          },
+        ],
+      };
+      jest.spyOn(modelMock, 'findOneAndUpdate').mockResolvedValueOnce(event);
+      expect(service.remove(eventId, participantId, id)).resolves.toStrictEqual(
+        event,
+      );
     });
   });
 });
