@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Param } from '@nestjs/common';
+import { Controller, Post, Body, Param, Delete } from '@nestjs/common';
 import { DestinationsService } from './destinations.service';
 import { CreateDestinationDto } from './dto/create-destination.dto';
 
@@ -17,5 +17,14 @@ export class DestinationsController {
       participantId,
       createDestinationDto,
     );
+  }
+
+  @Delete()
+  async delete(
+    @Param('eventId') eventId: string,
+    @Param('participantId') participantId: string,
+    @Body() body: { id: string },
+  ) {
+    return this.destinationsService.remove(eventId, participantId, body.id);
   }
 }

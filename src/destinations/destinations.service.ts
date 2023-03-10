@@ -53,4 +53,23 @@ export class DestinationsService {
       _id: newDestination._id,
     };
   }
+
+  async remove(
+    eventId: string,
+    participantId: string,
+    id: string,
+  ): Promise<any> {
+    const removedDestination: any = await this.eventModel.findOneAndUpdate(
+      {
+        _id: eventId,
+        'participants._id': participantId,
+      },
+      {
+        $pull: {
+          'participants.$.destinations': { _id: id },
+        },
+      },
+    );
+    return removedDestination;
+  }
 }
