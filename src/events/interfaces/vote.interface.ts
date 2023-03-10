@@ -1,4 +1,5 @@
 export interface IVote {
-  participant: string;
+  _id: string;
+  participantId: string;
   note: number;
 }

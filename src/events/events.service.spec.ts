@@ -2,7 +2,6 @@ import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Model } from 'mongoose';
 import { CreateEventDto } from './dto/create-event.dto';
-import { Event } from './entities/event.entity';
 import { EventsService } from './events.service';
 import { IEvent } from './interfaces/event.interface';
 
@@ -41,7 +40,7 @@ describe('EventsService', () => {
         minDuration: 0,
         maxDuration: 0,
       };
-      const eventReturned: Event = {
+      const eventReturned: IEvent = {
         name: 'test',
         minDuration: 0,
         maxDuration: 0,
