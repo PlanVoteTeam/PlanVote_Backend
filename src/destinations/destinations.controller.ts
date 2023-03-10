@@ -20,7 +20,7 @@ export class DestinationsController {
   }
 
   @Delete()
-  async delete(
+  async remove(
     @Param('eventId') eventId: string,
     @Param('participantId') participantId: string,
     @Body() body: { id: string },

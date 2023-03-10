@@ -8,6 +8,7 @@ import { Destination } from './entities/destination.entity';
 import { ConflictException } from '@nestjs/common';
 import { ERROR_CODE_DESTINATION_ALREADY_EXIST } from './destinations.error-code';
 import { ERROR_MESSAGE_DESTINATION_ALREADY_EXIST } from './destinations.error-message';
+import { Event } from 'src/events/entities/event.entity';
 
 describe('DestinationsController', () => {
   let controller: DestinationsController;
@@ -65,6 +66,24 @@ describe('DestinationsController', () => {
       expect(
         controller.create(eventId, participantId, createDestinationDto),
       ).rejects.toThrow(ConflictException);
+    });
+  });
+
+  describe('delete a destination', () => {
+    it('should delete a destination and return updated event', async () => {
+      const eventUpdated: Event = {
+        name: '',
+        minDuration: 0,
+        maxDuration: 0,
+        participants: [],
+      };
+      const eventId = '';
+      const participantId = '';
+      const body = { id: '' };
+      jest.spyOn(service, 'remove').mockResolvedValueOnce(eventUpdated);
+      expect(
+        await controller.remove(eventId, participantId, body),
+      ).toStrictEqual(eventUpdated);
     });
   });
 });
