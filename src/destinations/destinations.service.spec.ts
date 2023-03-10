@@ -4,7 +4,6 @@ import { Model } from 'mongoose';
 import { IEvent } from 'src/events/interfaces/event.interface';
 import { DestinationsService } from './destinations.service';
 import { CreateDestinationDto } from './dto/create-destination.dto';
-import { Event } from 'src/events/entities/event.entity';
 import { Destination } from './entities/destination.entity';
 import { ConflictException } from '@nestjs/common/exceptions';
 
@@ -45,7 +44,7 @@ describe('DestinationsService', () => {
         img: 'test',
         _id: 'a',
       };
-      const event: Event = {
+      const event: any = {
         name: 'test',
         minDuration: 0,
         maxDuration: 0,
@@ -76,7 +75,7 @@ describe('DestinationsService', () => {
         img: 'test',
         _id: 'a',
       };
-      const event: Event = {
+      const event: any = {
         name: 'test',
         minDuration: 0,
         maxDuration: 0,
