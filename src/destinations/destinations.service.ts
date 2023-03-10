@@ -2,12 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { ConflictException } from '@nestjs/common/exceptions';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { IEvent } from 'src/events/interfaces/event.interface';
 import { CreateDestinationDto } from './dto/create-destination.dto';
 import { ERROR_CODE_DESTINATION_ALREADY_EXIST } from './destinations.error-code';
 import { ERROR_MESSAGE_DESTINATION_ALREADY_EXIST } from './destinations.error-message';
-import { Destination } from './entities/destination.entity';
-import { Event } from 'src/events/entities/event.entity';
+import { IDestination } from 'src/events/interfaces/destination.interface';
+import { IEvent } from 'src/events/interfaces/event.interface';
 
 @Injectable()
 export class DestinationsService {
@@ -16,7 +15,7 @@ export class DestinationsService {
     eventId: string,
     participantId: string,
     createDestinationDto: CreateDestinationDto,
-  ): Promise<Destination> {
+  ): Promise<IDestination> {
     const isDestinationExist = await this.eventModel.findOne({
       $and: [
         { _id: eventId },
@@ -59,7 +58,7 @@ export class DestinationsService {
     eventId: string,
     participantId: string,
     id: string,
-  ): Promise<Event> {
+  ): Promise<IEvent> {
     const removedDestination: any = await this.eventModel.findOneAndUpdate(
       {
         _id: eventId,
@@ -71,6 +70,13 @@ export class DestinationsService {
         },
       },
     );
-    return removedDestination;
+    return {
+      _id: removedDestination._id,
+      name: removedDestination.name,
+      description: removedDestination.description,
+      minDuration: removedDestination.minDuration,
+      maxDuration: removedDestination.maxDuration,
+      participants: removedDestination.participants,
+    };
   }
 }

@@ -4,11 +4,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { DestinationsController } from './destinations.controller';
 import { DestinationsService } from './destinations.service';
 import { CreateDestinationDto } from './dto/create-destination.dto';
-import { Destination } from './entities/destination.entity';
+import { IDestination } from 'src/events/interfaces/destination.interface';
 import { ConflictException } from '@nestjs/common';
 import { ERROR_CODE_DESTINATION_ALREADY_EXIST } from './destinations.error-code';
 import { ERROR_MESSAGE_DESTINATION_ALREADY_EXIST } from './destinations.error-message';
-import { Event } from 'src/events/entities/event.entity';
+import { IEvent } from 'src/events/interfaces/event.interface';
 
 describe('DestinationsController', () => {
   let controller: DestinationsController;
@@ -37,7 +37,11 @@ describe('DestinationsController', () => {
 
   describe('Add a destination', () => {
     it('should return a destination', async () => {
-      const destinationCreated = new Destination();
+      const destinationCreated: IDestination = {
+        _id: '',
+        name: '',
+        img: '',
+      };
       const eventId = '';
       const participantId = '';
       const createDestinationDto: CreateDestinationDto = {
@@ -71,8 +75,9 @@ describe('DestinationsController', () => {
 
   describe('delete a destination', () => {
     it('should delete a destination and return updated event', async () => {
-      const eventUpdated: Event = {
+      const eventUpdated: IEvent = {
         name: '',
+        description: '',
         minDuration: 0,
         maxDuration: 0,
         participants: [],
