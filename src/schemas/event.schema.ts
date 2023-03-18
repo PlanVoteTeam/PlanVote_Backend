@@ -22,7 +22,7 @@ export const EventSchema = new mongoose.Schema<IEvent>({
           img: Schema.Types.String,
           votes: [
             {
-              participant: Schema.Types.ObjectId,
+              participantId: Schema.Types.ObjectId,
               note: Schema.Types.Number,
             },
           ],
