@@ -5,19 +5,19 @@ import { IEvent } from 'src/events/interfaces/event.interface';
 import { IVote } from 'src/events/interfaces/vote.interface';
 import { CreateVoteDto } from './dto/create-vote.dto';
 import { UpdateVoteDto } from './dto/update-vote.dto';
+import mongoose from 'mongoose';
 
 @Injectable()
 export class VotesService {
   constructor(@InjectModel('Event') private eventModel: Model<IEvent>) {}
 
-  // A refacto pour renvoyer que le vote
   async update(
     eventId: string,
     participantDestinatonId: string,
     destinationId: string,
     updateVoteDto: UpdateVoteDto,
   ): Promise<any> {
-    const updatedEvent: any = await this.eventModel.updateOne(
+    return await this.eventModel.updateOne(
       { _id: eventId },
       {
         $set: {
@@ -33,17 +33,15 @@ export class VotesService {
         ],
       },
     );
-    return updatedEvent;
   }
 
-  // A refacto pour renvoyer que le vote
   async create(
     eventId: string,
     participantDestinatonId: string,
     destinationId: string,
     createVoteDto: CreateVoteDto,
   ): Promise<any> {
-    const updatedEvent: any = await this.eventModel.updateOne(
+    return await this.eventModel.updateOne(
       { _id: eventId },
       {
         $push: {
@@ -58,7 +56,44 @@ export class VotesService {
         ],
       },
     );
+  }
 
-    return updatedEvent;
+  async find(
+    eventId: string,
+    participantDestinatonId: string,
+    destinationId: string,
+    voteParticipantId: string,
+  ): Promise<{ _id: string; vote: IVote }[]> {
+    const result = await this.eventModel.aggregate([
+      {
+        $unwind: '$participants',
+      },
+      {
+        $unwind: '$participants.destinations',
+      },
+
+      {
+        $unwind: '$participants.destinations.votes',
+      },
+      {
+        $match: {
+          _id: new mongoose.Types.ObjectId(eventId),
+          'participants._id': new mongoose.Types.ObjectId(
+            participantDestinatonId,
+          ),
+          'participants.destinations._id': new mongoose.Types.ObjectId(
+            destinationId,
+          ),
+          'participants.destinations.votes.participantId':
+            new mongoose.Types.ObjectId(voteParticipantId),
+        },
+      },
+      {
+        $project: {
+          vote: '$participants.destinations.votes',
+        },
+      },
+    ]);
+    return result;
   }
 }

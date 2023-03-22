@@ -39,6 +39,7 @@ describe('VotesController', () => {
         participantId: '',
         note: 5,
       };
+      const result = [{ _id: '', vote: voteCreated }];
       const eventId = '';
       const participantDestinationId = '';
       const destinationId = '';
@@ -47,6 +48,8 @@ describe('VotesController', () => {
         note: 5,
       };
       jest.spyOn(service, 'create').mockResolvedValue(createVoteDto);
+      jest.spyOn(service, 'find').mockResolvedValue(result);
+
       expect(
         await controller.create(
           eventId,
@@ -65,6 +68,7 @@ describe('VotesController', () => {
         participantId: '',
         note: 4,
       };
+      const result = [{ _id: '', vote: voteUpdated }];
       const eventId = '';
       const participantDestinationId = '';
       const destinationId = '';
@@ -73,6 +77,7 @@ describe('VotesController', () => {
         note: 4,
       };
       jest.spyOn(service, 'update').mockResolvedValue(updateVoteDto);
+      jest.spyOn(service, 'find').mockResolvedValue(result);
       expect(
         await controller.update(
           eventId,

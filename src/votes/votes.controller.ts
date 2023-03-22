@@ -1,6 +1,17 @@
-import { Controller, Post, Body, Param, Delete, Patch } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Patch,
+  ConflictException,
+} from '@nestjs/common';
+import { IVote } from 'src/events/interfaces/vote.interface';
 import { CreateVoteDto } from './dto/create-vote.dto';
 import { UpdateVoteDto } from './dto/update-vote.dto';
+import { ERROR_CODE_VOTE_DOESNT_EXIST } from './votes.error-code';
+import { ERROR_MESSAGE_VOTE_DOESNT_EXIST } from './votes.error-message';
 import { VotesService } from './votes.service';
 
 @Controller(
@@ -15,13 +26,29 @@ export class VotesController {
     @Param('participantDestinationId') participantDestinationId: string,
     @Param('destinationId') destinationId: string,
     @Body() body: UpdateVoteDto,
-  ): Promise<any> {
-    return this.votesService.update(
+  ): Promise<IVote> {
+    await this.votesService.update(
       eventId,
       participantDestinationId,
       destinationId,
       body,
     );
+
+    const result = await this.votesService.find(
+      eventId,
+      participantDestinationId,
+      destinationId,
+      body.participantId,
+    );
+
+    if (result.length) return result[0].vote;
+    else {
+      throw new ConflictException({
+        sucess: false,
+        errorCode: ERROR_CODE_VOTE_DOESNT_EXIST,
+        errorMessage: ERROR_MESSAGE_VOTE_DOESNT_EXIST,
+      });
+    }
   }
 
   @Post()
@@ -30,12 +57,27 @@ export class VotesController {
     @Param('participantDestinationId') participantDestinationId: string,
     @Param('destinationId') destinationId: string,
     @Body() body: CreateVoteDto,
-  ): Promise<any> {
-    return this.votesService.create(
+  ): Promise<IVote> {
+    await this.votesService.create(
       eventId,
       participantDestinationId,
       destinationId,
       body,
     );
+    const result = await this.votesService.find(
+      eventId,
+      participantDestinationId,
+      destinationId,
+      body.participantId,
+    );
+
+    if (result.length) return result[0].vote;
+    else {
+      throw new ConflictException({
+        sucess: false,
+        errorCode: ERROR_CODE_VOTE_DOESNT_EXIST,
+        errorMessage: ERROR_MESSAGE_VOTE_DOESNT_EXIST,
+      });
+    }
   }
 }

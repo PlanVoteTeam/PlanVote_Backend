@@ -37,11 +37,13 @@ describe('EventsService', () => {
     it('should return event created', async () => {
       const createEventDto: CreateEventDto = {
         name: 'test',
+        description: '',
         minDuration: 0,
         maxDuration: 0,
       };
       const eventReturned: IEvent = {
         name: 'test',
+        description: '',
         minDuration: 0,
         maxDuration: 0,
       };

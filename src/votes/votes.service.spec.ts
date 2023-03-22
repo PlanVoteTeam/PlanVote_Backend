@@ -16,6 +16,7 @@ describe('VotesService', () => {
       provide: getModelToken('Event'),
       useValue: {
         updateOne: jest.fn(),
+        aggregate: jest.fn(),
       },
     },
   ];
@@ -34,34 +35,7 @@ describe('VotesService', () => {
   });
 
   describe('Add a vote', () => {
-    it('should return a vote added', () => {
-      const vote: IVote = {
-        _id: '',
-        participantId: '',
-        note: 5,
-      };
-      /*
-      const destination: IDestination = {
-        _id: '',
-        name: '',
-        img: '',
-        votes: [vote],
-      };
-      const event: IEvent = {
-        name: 'test',
-        description: '',
-        minDuration: 0,
-        maxDuration: 0,
-        participants: [
-          {
-            _id: '1',
-            name: 'Rémy',
-            destinations: [destination],
-            timeSlots: [],
-          },
-        ],
-      };
-      */
+    it('should return updateOne result', () => {
       const voteInsertion = {
         acknowledged: true,
         modifiedCount: 1,
@@ -85,18 +59,12 @@ describe('VotesService', () => {
           destinationId,
           createVoteDto,
         ),
-      ).resolves.toStrictEqual(vote);
+      ).resolves.toStrictEqual(voteInsertion);
     });
   });
 
   describe('Add a vote', () => {
-    it('should return a vote updated', () => {
-      const vote: IVote = {
-        _id: '',
-        participantId: '',
-        note: 5,
-      };
-
+    it('should return updateOne result', () => {
       const voteUpdate = {
         acknowledged: true,
         modifiedCount: 1,
@@ -120,9 +88,32 @@ describe('VotesService', () => {
           destinationId,
           updateVoteDto,
         ),
-      ).resolves.toStrictEqual(vote);
+      ).resolves.toStrictEqual(voteUpdate);
     });
   });
 
-  // Tests à refacto après refacto des retours des intéractions vote.
+  describe('Get a vote', () => {
+    it('should return an aggregate with 1 vote', () => {
+      const vote: IVote = {
+        _id: '',
+        participantId: '641b24fc4ca08404d963c95a',
+        note: 5,
+      };
+      const result = [{ _id: '641b24fc4ca08404d963c95a', vote: vote }];
+      const eventId = '641b24fc4ca08404d963c95a';
+      const participantDestinationId = '641b24fc4ca08404d963c95a';
+      const destinationId = '641b24fc4ca08404d963c95a';
+      const participantVoteId = '641b24fc4ca08404d963c95a';
+
+      jest.spyOn(modelMock, 'aggregate').mockResolvedValueOnce(result);
+      expect(
+        service.find(
+          eventId,
+          participantDestinationId,
+          destinationId,
+          participantVoteId,
+        ),
+      ).resolves.toStrictEqual(result);
+    });
+  });
 });
