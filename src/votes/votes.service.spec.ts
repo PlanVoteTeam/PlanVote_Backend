@@ -116,4 +116,25 @@ describe('VotesService', () => {
       ).resolves.toStrictEqual(result);
     });
   });
+
+  describe('delete a vote', () => {
+    it('should an update result with modifiedcount', () => {
+      const voteDeleted = {
+        acknowledged: true,
+        modifiedCount: 1,
+        upsertedId: null,
+        upsertedCount: 0,
+        matchedCount: 1,
+      };
+      const eventId = '641b24fc4ca08404d963c95a';
+      const participantId = '641b24fc4ca08404d963c95a';
+      const destinationId = '641b24fc4ca08404d963c95a';
+      const voteId = '641b24fc4ca08404d963c95a';
+
+      jest.spyOn(modelMock, 'updateOne').mockResolvedValueOnce(voteDeleted);
+      expect(
+        service.delete(eventId, participantId, destinationId, voteId),
+      ).resolves.toStrictEqual(voteDeleted);
+    });
+  });
 });

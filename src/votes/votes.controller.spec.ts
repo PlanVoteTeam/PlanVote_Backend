@@ -6,6 +6,8 @@ import { VotesService } from './votes.service';
 import { IVote } from 'src/events/interfaces/vote.interface';
 import { CreateVoteDto } from './dto/create-vote.dto';
 import { UpdateVoteDto } from './dto/update-vote.dto';
+import { NotFoundException } from '@nestjs/common';
+import { DeleteVoteDto } from './dto/delete-vote.dto';
 
 describe('VotesController', () => {
   let controller: VotesController;
@@ -86,6 +88,55 @@ describe('VotesController', () => {
           updateVoteDto,
         ),
       ).toBe(voteUpdated);
+    });
+  });
+
+  describe('Delete a vote', () => {
+    it('should delete a vote', async () => {
+      const voteDeletion = {
+        acknowledged: true,
+        modifiedCount: 1,
+        upsertedId: null,
+        upsertedCount: 0,
+        matchedCount: 1,
+      };
+      const result = true;
+      const eventId = '';
+      const participantDestinationId = '';
+      const destinationId = '';
+      const body: DeleteVoteDto = { _id: '' };
+      jest.spyOn(service, 'delete').mockResolvedValue(voteDeletion);
+      expect(
+        await controller.delete(
+          eventId,
+          participantDestinationId,
+          destinationId,
+          body,
+        ),
+      ).toBe(result);
+    });
+
+    it("should throw an error because vote doesn't exist", async () => {
+      const voteDeletion = {
+        acknowledged: true,
+        modifiedCount: 0,
+        upsertedId: null,
+        upsertedCount: 0,
+        matchedCount: 1,
+      };
+      const eventId = '';
+      const participantDestinationId = '';
+      const destinationId = '';
+      const body: DeleteVoteDto = { _id: '' };
+      jest.spyOn(service, 'delete').mockResolvedValue(voteDeletion);
+      expect(
+        controller.delete(
+          eventId,
+          participantDestinationId,
+          destinationId,
+          body,
+        ),
+      ).rejects.toThrow(NotFoundException);
     });
   });
 });

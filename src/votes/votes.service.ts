@@ -96,4 +96,28 @@ export class VotesService {
     ]);
     return result;
   }
+
+  async delete(
+    eventId: string,
+    participantId: string,
+    destinationId: string,
+    voteId: string,
+  ): Promise<any> {
+    return await this.eventModel.updateOne(
+      { _id: eventId },
+      {
+        $pull: {
+          'participants.$[participants].destinations.$[destinations].votes': {
+            _id: voteId,
+          },
+        },
+      },
+      {
+        arrayFilters: [
+          { 'participants._id': participantId },
+          { 'destinations._id': destinationId },
+        ],
+      },
+    );
+  }
 }

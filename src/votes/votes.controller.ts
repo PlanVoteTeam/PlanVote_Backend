@@ -5,10 +5,11 @@ import {
   Param,
   Delete,
   Patch,
-  ConflictException,
+  NotFoundException,
 } from '@nestjs/common';
 import { IVote } from 'src/events/interfaces/vote.interface';
 import { CreateVoteDto } from './dto/create-vote.dto';
+import { DeleteVoteDto } from './dto/delete-vote.dto';
 import { UpdateVoteDto } from './dto/update-vote.dto';
 import { ERROR_CODE_VOTE_DOESNT_EXIST } from './votes.error-code';
 import { ERROR_MESSAGE_VOTE_DOESNT_EXIST } from './votes.error-message';
@@ -43,7 +44,7 @@ export class VotesController {
 
     if (result.length) return result[0].vote;
     else {
-      throw new ConflictException({
+      throw new NotFoundException({
         sucess: false,
         errorCode: ERROR_CODE_VOTE_DOESNT_EXIST,
         errorMessage: ERROR_MESSAGE_VOTE_DOESNT_EXIST,
@@ -73,7 +74,30 @@ export class VotesController {
 
     if (result.length) return result[0].vote;
     else {
-      throw new ConflictException({
+      throw new NotFoundException({
+        sucess: false,
+        errorCode: ERROR_CODE_VOTE_DOESNT_EXIST,
+        errorMessage: ERROR_MESSAGE_VOTE_DOESNT_EXIST,
+      });
+    }
+  }
+
+  @Delete()
+  async delete(
+    @Param('eventId') eventId: string,
+    @Param('participantDestinationId') participantDestinationId: string,
+    @Param('destinationId') destinationId: string,
+    @Body() body: DeleteVoteDto,
+  ) {
+    const result = await this.votesService.delete(
+      eventId,
+      participantDestinationId,
+      destinationId,
+      body._id,
+    );
+    if (result.modifiedCount) return true;
+    else {
+      throw new NotFoundException({
         sucess: false,
         errorCode: ERROR_CODE_VOTE_DOESNT_EXIST,
         errorMessage: ERROR_MESSAGE_VOTE_DOESNT_EXIST,
