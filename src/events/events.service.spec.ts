@@ -2,6 +2,7 @@ import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Model } from 'mongoose';
 import { CreateEventDto } from './dto/create-event.dto';
+import { UpdateEventDto } from './dto/update-event.dto';
 import { EventsService } from './events.service';
 import { IEvent } from './interfaces/event.interface';
 
@@ -42,6 +43,7 @@ describe('EventsService', () => {
         maxDuration: 0,
       };
       const eventReturned: IEvent = {
+        _id: '',
         name: 'test',
         description: '',
         minDuration: 0,
@@ -49,13 +51,35 @@ describe('EventsService', () => {
       };
       jest
         .spyOn(modelMock, 'create')
-        //Le as any permet d'éviter les problèmes de typage Mongoose Document.
-        //Donc on peut se permettre de renvoyer n'importe quoi vue que le but ici
-        //Est de tester si la logique de la méthode est respecter.
         .mockImplementationOnce(() => Promise.resolve(eventReturned) as any);
       expect(service.create(createEventDto)).resolves.toStrictEqual(
         eventReturned,
       );
+    });
+
+    describe('update an Event', () => {
+      it('should return event updated', async () => {
+        const eventId = '';
+        const updateEventDto: UpdateEventDto = {
+          name: 'test',
+          description: '',
+          minDuration: 0,
+          maxDuration: 0,
+        };
+        const eventReturned: IEvent = {
+          _id: '',
+          name: 'test',
+          description: '',
+          minDuration: 0,
+          maxDuration: 0,
+        };
+        jest
+          .spyOn(modelMock, 'create')
+          .mockImplementationOnce(() => Promise.resolve(eventReturned) as any);
+        expect(service.update(eventId, updateEventDto)).resolves.toStrictEqual(
+          eventReturned,
+        );
+      });
     });
   });
 });
