@@ -79,7 +79,19 @@ export class TimeSlotService {
     return `This action updates a #${id} timeSlot`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} timeSlot`;
+  async remove(eventId: string, participantId: string, timeSlotId: string) {
+    const eventUpdated = await this.eventModel.findOneAndUpdate(
+      {
+        _id: eventId,
+        'participants._id': participantId,
+      },
+      {
+        $pull: {
+          'participants.$.timeSlots': { _id: timeSlotId },
+        },
+      },
+    );
+
+    return eventUpdated;
   }
 }

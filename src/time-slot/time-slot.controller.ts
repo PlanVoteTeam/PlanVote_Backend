@@ -50,7 +50,11 @@ export class TimeSlotController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.timeSlotService.remove(+id);
+  async remove(
+    @Param('eventId') eventId: string,
+    @Param('participantId') participantId: string,
+    @Param('id') timeSlotId: string,
+  ) {
+    return this.timeSlotService.remove(eventId, participantId, timeSlotId);
   }
 }
