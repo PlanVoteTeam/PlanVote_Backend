@@ -90,6 +90,9 @@ export class TimeSlotService {
           'participants.$.timeSlots': { _id: timeSlotId },
         },
       },
+      {
+        new: true,
+      },
     );
 
     return eventUpdated;
