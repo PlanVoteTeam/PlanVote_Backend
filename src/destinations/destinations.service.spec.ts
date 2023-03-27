@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import { IEvent } from 'src/events/interfaces/event.interface';
 import { DestinationsService } from './destinations.service';
 import { CreateDestinationDto } from './dto/create-destination.dto';
-import { Destination } from './entities/destination.entity';
+import { IDestination } from 'src/events/interfaces/destination.interface';
 import { ConflictException } from '@nestjs/common/exceptions';
 
 describe('DestinationsService', () => {
@@ -39,7 +39,7 @@ describe('DestinationsService', () => {
 
   describe('create destination', () => {
     it('should return destination created', async () => {
-      const destination: Destination = {
+      const destination: IDestination = {
         name: 'test',
         img: 'test',
         _id: 'a',
@@ -72,7 +72,7 @@ describe('DestinationsService', () => {
     });
 
     it('should throw an error (duplicate)', async () => {
-      const destination: Destination = {
+      const destination: IDestination = {
         name: 'test',
         img: 'test',
         _id: 'a',

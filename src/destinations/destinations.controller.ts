@@ -2,7 +2,7 @@ import { Controller, Post, Body, Param, Delete } from '@nestjs/common';
 import { DestinationsService } from './destinations.service';
 import { CreateDestinationDto } from './dto/create-destination.dto';
 
-@Controller('events/:eventId/participants/:participantId/destination')
+@Controller('events/:eventId/participants/:participantId/destinations')
 export class DestinationsController {
   constructor(private readonly destinationsService: DestinationsService) {}
 
