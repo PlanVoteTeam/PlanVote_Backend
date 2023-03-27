@@ -17,12 +17,7 @@ export class EventsService {
       minDuration: createEventDto.minDuration,
       maxDuration: createEventDto.maxDuration,
     });
-    return {
-      name: eventSaved.name,
-      description: eventSaved.description,
-      minDuration: eventSaved.minDuration,
-      maxDuration: eventSaved.maxDuration,
-    };
+    return eventSaved;
   }
 
   findAll() {
@@ -38,6 +33,7 @@ export class EventsService {
       });
     }
     return {
+      _id: eventFound._id,
       name: eventFound.name,
       description: eventFound.description,
       minDuration: eventFound.minDuration,
@@ -46,7 +42,7 @@ export class EventsService {
     };
   }
 
-  async update(id: string, updateEventDto: UpdateEventDto) {
+  async update(id: string, updateEventDto: UpdateEventDto): Promise<IEvent> {
     const eventUpdate = await this.eventModel.findOneAndUpdate(
       {
         _id: id,

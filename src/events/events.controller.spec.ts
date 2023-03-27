@@ -2,12 +2,13 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CreateEventDto } from './dto/create-event.dto';
 import { EventsController } from './events.controller';
 import { EventsService } from './events.service';
-import { Event } from './entities/event.entity';
 import { getModelToken } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { NotFoundException } from '@nestjs/common/exceptions';
 import { EVENT_NOT_FOUND_ERROR_CODE } from './events.error-code';
 import { EVENT_NOT_FOUND_ERROR_MESSAGE } from './events.error-message';
+import { UpdateEventDto } from './dto/update-event.dto';
+import { IEvent } from './interfaces/event.interface';
 
 describe('EventsController', () => {
   let controller: EventsController;
@@ -36,7 +37,14 @@ describe('EventsController', () => {
 
   describe('create an Event', () => {
     it('should return event created', async () => {
-      const eventCreated = new Event();
+      const eventCreated: IEvent = {
+        _id: '1',
+        description: '',
+        name: 'test',
+        minDuration: 0,
+        maxDuration: 0,
+        participants: [],
+      };
       const createEventDto: CreateEventDto = {
         name: '',
         minDuration: 0,
@@ -50,9 +58,42 @@ describe('EventsController', () => {
     });
   });
 
+  describe('update an Event', () => {
+    it('should return event updated', async () => {
+      const eventUpdated: IEvent = {
+        _id: '1',
+        description: '',
+        name: 'test',
+        minDuration: 0,
+        maxDuration: 0,
+        participants: [],
+      };
+      const updateEventDto: UpdateEventDto = {
+        name: '',
+        minDuration: 0,
+        maxDuration: 0,
+        description: '',
+      };
+      jest
+        .spyOn(service, 'update')
+        .mockImplementation(() => Promise.resolve(eventUpdated));
+
+      expect(await controller.update(eventUpdated._id, updateEventDto)).toBe(
+        eventUpdated,
+      );
+    });
+  });
+
   describe('findOne event', () => {
     it('should return an event', async () => {
-      const eventFound = new Event();
+      const eventFound: IEvent = {
+        _id: '1',
+        description: '',
+        name: 'test',
+        minDuration: 0,
+        maxDuration: 0,
+        participants: [],
+      };
 
       jest
         .spyOn(service, 'findOne')
