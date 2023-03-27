@@ -62,8 +62,13 @@ export class TimeSlotService {
     return timeSlots;
   }
 
-  findAll() {
-    return `This action returns all timeSlot`;
+  async findAll(eventId: string, participantId: string): Promise<ITimeSlot[]> {
+    const eventFound = await this.eventModel.findOne({
+      _id: eventId,
+      'participants._id': participantId,
+    });
+
+    return eventFound.participants[0].timeSlots;
   }
 
   findOne(id: number) {
