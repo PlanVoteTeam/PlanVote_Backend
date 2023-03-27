@@ -6,6 +6,7 @@ export const EventSchema = new mongoose.Schema<IEvent>({
     type: Schema.Types.String,
     required: true,
   },
+  description: Schema.Types.String,
   minDuration: Schema.Types.Number,
   maxDuration: Schema.Types.Number,
   participants: [
