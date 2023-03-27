@@ -7,6 +7,7 @@ import { EventsModule } from './events/events.module';
 import { ParticipantsModule } from './participants/participants.module';
 import { DestinationsModule } from './destinations/destinations.module';
 import { VotesModule } from './votes/votes.module';
+import { TimeSlotModule } from './time-slot/time-slot.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { VotesModule } from './votes/votes.module';
     ParticipantsModule,
     DestinationsModule,
     VotesModule,
+    TimeSlotModule,
   ],
   controllers: [AppController],
   providers: [AppService],
