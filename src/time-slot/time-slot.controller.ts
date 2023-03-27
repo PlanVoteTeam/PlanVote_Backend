@@ -16,7 +16,7 @@ export class TimeSlotController {
   constructor(private readonly timeSlotService: TimeSlotService) {}
 
   @Post()
-  create(
+  async create(
     @Param('eventId') eventId: string,
     @Param('participantId') participantId: string,
     @Body() createTimeSlotDto: CreateTimeSlotDto,
@@ -29,8 +29,11 @@ export class TimeSlotController {
   }
 
   @Get()
-  findAll() {
-    return this.timeSlotService.findAll();
+  async findAll(
+    @Param('eventId') eventId: string,
+    @Param('participantId') participantId: string,
+  ) {
+    return this.timeSlotService.findAll(eventId, participantId);
   }
 
   @Get(':id')
