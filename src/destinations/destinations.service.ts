@@ -7,6 +7,7 @@ import { ERROR_CODE_DESTINATION_ALREADY_EXIST } from './destinations.error-code'
 import { ERROR_MESSAGE_DESTINATION_ALREADY_EXIST } from './destinations.error-message';
 import { IDestination } from 'src/events/interfaces/destination.interface';
 import { IEvent } from 'src/events/interfaces/event.interface';
+import { IParticipant } from 'src/events/interfaces/participant.interface';
 
 @Injectable()
 export class DestinationsService {
@@ -44,8 +45,10 @@ export class DestinationsService {
     );
 
     const newDestination = updatedEvent.participants
-      .filter((p) => p._id == participantId)[0]
-      .destinations.filter((d) => d.name == createDestinationDto.name)[0];
+      .filter((p: IParticipant) => p._id.toString() === participantId)[0]
+      .destinations.filter(
+        (d: IDestination) => d.name === createDestinationDto.name,
+      )[0];
 
     return {
       name: newDestination.name,
