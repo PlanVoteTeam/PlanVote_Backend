@@ -1,0 +1,37 @@
+[
+  {
+    $match: {
+      _id: ObjectId('640716fa3d8b5694b431eaa7')
+    },
+  },
+  {
+    $unwind: "$participants",
+  },
+  {
+    $unwind: "$participants.timeSlots",
+  },
+  {
+    $project: {
+      _id: "$participants.timeSlots._id",
+      participantId: "$participants._id",
+      startDate : "$participants.timeSlots.startDate",
+      endDate: "$participants.timeSlots.endDate",
+    }
+  },
+  {
+    $addFields: {
+      duration: {
+        $dateDiff: {
+          startDate: '$startDate',
+          endDate: '$endDate',
+          unit: 'day'
+        }
+      }
+    }
+  },
+  {
+    $match : {
+      duration: { $gt : 1 },
+    }
+  }
+]
