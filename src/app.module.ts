@@ -9,6 +9,7 @@ import { DestinationsModule } from './destinations/destinations.module';
 import { VotesModule } from './votes/votes.module';
 import { TimeSlotModule } from './time-slot/time-slot.module';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { StepsModule } from './steps/steps.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
     DestinationsModule,
     VotesModule,
     TimeSlotModule,
+    StepsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
