@@ -43,7 +43,7 @@ export class ParticipantsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.participantsService.remove(+id);
+  remove(@Param('eventId') eventId: string, @Param('id') id: string) {
+    return this.participantsService.remove(eventId, id);
   }
 }

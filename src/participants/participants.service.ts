@@ -75,8 +75,51 @@ export class ParticipantsService {
     return update;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} participant`;
+  async remove(eventId: string, participantId: string) {
+    await this.eventModel.updateOne(
+      {
+        _id: eventId,
+      },
+      {
+        $pull: {
+          participants: {
+            _id: participantId,
+          },
+        },
+      },
+      {
+        new: true,
+      },
+    );
+
+    const eventUpdated = await this.eventModel.findOneAndUpdate(
+      {
+        _id: eventId,
+      },
+      {
+        $pull: {
+          'participants.$[participants].destinations.$[destinations].votes': {
+            participantId: participantId,
+          },
+        },
+      },
+      {
+        new: true,
+        arrayFilters: [
+          {
+            'participants._id': {
+              $ne: null,
+            },
+          },
+          {
+            'destinations._id': {
+              $ne: null,
+            },
+          },
+        ],
+      },
+    );
+    return eventUpdated;
   }
 
   private async checkParticipantName(eventId: string, nameToCheck: string) {
