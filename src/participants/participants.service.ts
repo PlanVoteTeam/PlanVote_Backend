@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConflictException } from '@nestjs/common/exceptions';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { IEvent } from 'src/events/interfaces/event.interface';
 import { CreateParticipantDto } from './dto/create-participant.dto';
 import { UpdateParticipantDto } from './dto/update-participant.dto';
@@ -120,6 +120,62 @@ export class ParticipantsService {
       },
     );
     return eventUpdated;
+  }
+
+  async getAllVotes(eventId: string, participantId: string) {
+    const votesFound = await this.eventModel.aggregate([
+      {
+        $match: {
+          _id: new mongoose.Types.ObjectId(eventId),
+        },
+      },
+      {
+        $unwind: '$participants',
+      },
+      {
+        $unwind: '$participants.destinations',
+      },
+      {
+        $unwind: '$participants.destinations.votes',
+      },
+      {
+        $match: {
+          'participants.destinations.votes.participantId':
+            new mongoose.Types.ObjectId(participantId),
+        },
+      },
+      {
+        $project: {
+          'destinations._id': '$participants.destinations._id',
+          'destinations.name': '$participants.destinations.name',
+          'destinations.votes._id': '$participants.destinations.votes._id',
+          'destinations.votes.note': '$participants.destinations.votes.note',
+          'destinations.votes.participantId':
+            '$participants.destinations.votes.participantId',
+          _id: '$participants._id',
+        },
+      },
+      {
+        $group: {
+          _id: '$destinations.votes.participantId',
+          destinations: {
+            $push: '$destinations',
+          },
+        },
+      },
+      {
+        $project: {
+          'destinations.votes.participantId': 0,
+        },
+      },
+    ]);
+
+    return votesFound.map((votes) => {
+      return {
+        participantId: votes._id,
+        destinations: votes.destinations,
+      };
+    });
   }
 
   private async checkParticipantName(eventId: string, nameToCheck: string) {

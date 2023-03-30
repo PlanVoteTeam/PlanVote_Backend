@@ -6,13 +6,20 @@ import {
   Delete,
   Patch,
   NotFoundException,
+  ConflictException,
 } from '@nestjs/common';
 import { IVote } from 'src/events/interfaces/vote.interface';
 import { CreateVoteDto } from './dto/create-vote.dto';
 import { DeleteVoteDto } from './dto/delete-vote.dto';
 import { UpdateVoteDto } from './dto/update-vote.dto';
-import { ERROR_CODE_VOTE_DOESNT_EXIST } from './votes.error-code';
-import { ERROR_MESSAGE_VOTE_DOESNT_EXIST } from './votes.error-message';
+import {
+  ERROR_CODE_ALREADY_VOTED,
+  ERROR_CODE_VOTE_DOESNT_EXIST,
+} from './votes.error-code';
+import {
+  ERROR_MESSAGE_ALREADY_VOTED,
+  ERROR_MESSAGE_VOTE_DOESNT_EXIST,
+} from './votes.error-message';
 import { VotesService } from './votes.service';
 
 @Controller(
@@ -59,6 +66,21 @@ export class VotesController {
     @Param('destinationId') destinationId: string,
     @Body() body: CreateVoteDto,
   ): Promise<IVote> {
+    const checkAlreadyVote = await this.votesService.find(
+      eventId,
+      participantDestinationId,
+      destinationId,
+      body.participantId,
+    );
+
+    if (checkAlreadyVote.length === 1) {
+      throw new ConflictException({
+        sucess: false,
+        errorCode: ERROR_CODE_ALREADY_VOTED,
+        errorMessage: ERROR_MESSAGE_ALREADY_VOTED,
+      });
+    }
+
     await this.votesService.create(
       eventId,
       participantDestinationId,

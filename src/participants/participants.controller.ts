@@ -46,4 +46,12 @@ export class ParticipantsController {
   remove(@Param('eventId') eventId: string, @Param('id') id: string) {
     return this.participantsService.remove(eventId, id);
   }
+
+  @Get(':id/votes')
+  async getAllVotesByDestinations(
+    @Param('eventId') eventId: string,
+    @Param('id') id: string,
+  ) {
+    return await this.participantsService.getAllVotes(eventId, id);
+  }
 }
