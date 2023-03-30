@@ -44,24 +44,21 @@ export class DestinationsService {
       },
     );
 
-    const newDestination = updatedEvent.participants
-      .filter((p: IParticipant) => p._id.toString() === participantId)[0]
-      .destinations.filter(
-        (d: IDestination) => d.name === createDestinationDto.name,
-      )[0];
+    return updatedEvent;
+    // const newDestination = updatedEvent.participants
+    //   .filter((p: IParticipant) => p._id.toString() === participantId)[0]
+    //   .destinations.filter(
+    //     (d: IDestination) => d.name === createDestinationDto.name,
+    //   )[0];
 
-    return {
-      name: newDestination.name,
-      img: newDestination.img,
-      _id: newDestination._id,
-    };
+    // return {
+    //   name: newDestination.name,
+    //   img: newDestination.img,
+    //   _id: newDestination._id,
+    // };
   }
 
-  async remove(
-    eventId: string,
-    participantId: string,
-    id: string,
-  ): Promise<IEvent> {
+  async remove(eventId: string, participantId: string, id: string) {
     const removedDestination: any = await this.eventModel.findOneAndUpdate(
       {
         _id: eventId,
@@ -72,14 +69,18 @@ export class DestinationsService {
           'participants.$.destinations': { _id: id },
         },
       },
+      {
+        new: true,
+      },
     );
-    return {
-      _id: removedDestination._id,
-      name: removedDestination.name,
-      description: removedDestination.description,
-      minDuration: removedDestination.minDuration,
-      maxDuration: removedDestination.maxDuration,
-      participants: removedDestination.participants,
-    };
+    return removedDestination;
+    // return {
+    //   _id: removedDestination._id,
+    //   name: removedDestination.name,
+    //   description: removedDestination.description,
+    //   minDuration: removedDestination.minDuration,
+    //   maxDuration: removedDestination.maxDuration,
+    //   participants: removedDestination.participants,
+    // };
   }
 }
