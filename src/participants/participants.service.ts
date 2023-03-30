@@ -170,7 +170,12 @@ export class ParticipantsService {
       },
     ]);
 
-    return votesFound;
+    return votesFound.map((votes) => {
+      return {
+        participantId: votes._id,
+        destinations: votes.destinations,
+      };
+    });
   }
 
   private async checkParticipantName(eventId: string, nameToCheck: string) {
