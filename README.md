@@ -1,3 +1,7 @@
+# 🚀 Plan & Vote
+
+[![Code quality ✨](https://github.com/PlanVoteTeam/PlanVote_Backend/actions/workflows/main-workflow.yml/badge.svg)](https://github.com/PlanVoteTeam/PlanVote_Backend/actions/workflows/main-workflow.yml)
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
