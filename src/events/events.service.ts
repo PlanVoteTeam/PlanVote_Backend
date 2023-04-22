@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { EVENT_NOT_FOUND_ERROR_CODE } from './events.error-code';
@@ -59,6 +59,26 @@ export class EventsService {
     );
 
     return eventUpdate;
+  }
+
+  async countParticipants(eventId: string) {
+    const participantCount: any = await this.eventModel.aggregate([
+      {
+        $match: {
+          _id: new mongoose.Types.ObjectId(eventId),
+        },
+      },
+      {
+        $unwind: '$participants',
+      },
+      {
+        $count: 'participants',
+      },
+    ]);
+    if (participantCount.length) {
+      return participantCount[0].participants;
+    }
+    return 0;
   }
 
   async remove(id: string) {
