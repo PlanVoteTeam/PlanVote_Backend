@@ -6,3 +6,9 @@ export const ERROR_CODE_STEP_NOT_ENOUGH_COMMON_DATES =
   'NOT ENOUGH COMMON DATES';
 export const ERROR_MESSAGE_STEP_NOT_ENOUGH_COMMON_DATES =
   'There is not enough common dates between the participants, it is not possible to schedule a date';
+
+export const ERROR_CODE_STEP_NOT_ENOUGH_PARTICIPANTS =
+  'NOT_ENOUGH_PARTICIPANTS';
+
+export const ERROR_MESSAGE_STEP_NOT_ENOUGH_PARTICIPANTS =
+  'Not enough participants to schedule a date';
