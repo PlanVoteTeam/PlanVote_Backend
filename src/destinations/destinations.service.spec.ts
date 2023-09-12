@@ -65,8 +65,10 @@ describe('DestinationsService', () => {
         img: 'test',
       };
       jest.spyOn(modelMock, 'findOne').mockResolvedValueOnce(undefined);
-      jest.spyOn(modelMock, 'findOneAndUpdate').mockResolvedValueOnce(event);
-      expect(
+      jest
+        .spyOn(modelMock, 'findOneAndUpdate')
+        .mockResolvedValueOnce(destination);
+      return expect(
         service.create(eventId, participantId, createDestinationDto),
       ).resolves.toStrictEqual(destination);
     });
