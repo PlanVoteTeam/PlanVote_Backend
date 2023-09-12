@@ -8,6 +8,7 @@ import { ParticipantsModule } from './participants/participants.module';
 import { DestinationsModule } from './destinations/destinations.module';
 import { VotesModule } from './votes/votes.module';
 import { TimeSlotModule } from './time-slot/time-slot.module';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -20,6 +21,12 @@ import { TimeSlotModule } from './time-slot/time-slot.module';
       }),
       inject: [ConfigService],
     }),
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,
+        limit: 3,
+      },
+    ]),
     EventsModule,
     ParticipantsModule,
     DestinationsModule,
