@@ -44,20 +44,6 @@ describe('DestinationsService', () => {
         img: 'test',
         _id: 'a',
       };
-      const event: IEvent = {
-        name: 'test',
-        description: '',
-        minDuration: 0,
-        maxDuration: 0,
-        participants: [
-          {
-            _id: '1',
-            name: 'Rémy',
-            destinations: [destination],
-            timeSlots: [],
-          },
-        ],
-      };
       const eventId = '';
       const participantId = '1';
       const createDestinationDto: CreateDestinationDto = {
