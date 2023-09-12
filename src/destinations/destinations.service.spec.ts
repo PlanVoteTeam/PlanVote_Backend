@@ -100,7 +100,7 @@ describe('DestinationsService', () => {
         img: 'test',
       };
       jest.spyOn(modelMock, 'findOne').mockResolvedValueOnce(event);
-      expect(
+      return expect(
         service.create(eventId, participantId, createDestinationDto),
       ).rejects.toThrow(ConflictException);
     });
@@ -127,9 +127,9 @@ describe('DestinationsService', () => {
         ],
       };
       jest.spyOn(modelMock, 'findOneAndUpdate').mockResolvedValueOnce(event);
-      expect(service.remove(eventId, participantId, id)).resolves.toStrictEqual(
-        event,
-      );
+      return expect(
+        service.remove(eventId, participantId, id),
+      ).resolves.toStrictEqual(event);
     });
   });
 });

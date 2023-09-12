@@ -73,7 +73,7 @@ export class VotesController {
       body.participantId,
     );
 
-    if (checkAlreadyVote.length === 1) {
+    if (checkAlreadyVote) {
       throw new ConflictException({
         sucess: false,
         errorCode: ERROR_CODE_ALREADY_VOTED,
