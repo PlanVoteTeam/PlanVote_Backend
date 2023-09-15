@@ -1,5 +1,6 @@
 import {
   Controller,
+  Get,
   Param,
   Post,
   UnprocessableEntityException,
@@ -48,7 +49,7 @@ export class StepsController {
       });
     }
     if (event.step) {
-      this.stepsService.deleteStep(event.step._id);
+      await this.stepsService.deleteStep(event.step._id);
     }
     const step: IStep = await this.stepsService.createStep(
       destinationsAvg,
@@ -61,7 +62,14 @@ export class StepsController {
         stepDate: new Date(Date.now()),
       },
     };
+
     await this.eventService.update(event._id, updateEventParams);
+
     return step;
+  }
+
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    return this.stepsService.findOne(id);
   }
 }

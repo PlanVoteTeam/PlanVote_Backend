@@ -39,6 +39,7 @@ export class EventsService {
       minDuration: eventFound.minDuration,
       maxDuration: eventFound.maxDuration,
       participants: eventFound.participants,
+      step: eventFound.step,
     };
   }
 

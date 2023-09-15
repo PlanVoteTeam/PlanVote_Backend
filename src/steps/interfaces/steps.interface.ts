@@ -26,7 +26,7 @@ export interface ISizedWindow {
 
 export interface DestinationAvg {
   _id: string;
-  _name: string;
+  name: string;
   avgNote: number;
 }
 
