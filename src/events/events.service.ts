@@ -53,6 +53,7 @@ export class EventsService {
           description: updateEventDto?.description,
           minDuration: updateEventDto?.minDuration,
           maxDuration: updateEventDto?.maxDuration,
+          step: updateEventDto?.step,
         },
       },
       { new: true },
