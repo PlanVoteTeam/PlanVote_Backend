@@ -23,3 +23,15 @@ export interface ISizedWindow {
   maxCommonUser: number;
   windows: IWindow[];
 }
+
+export interface DestinationAvg {
+  _id: string;
+  _name: string;
+  avgNote: number;
+}
+
+export interface IStep {
+  _id: string;
+  bestDestinations: DestinationAvg[];
+  glidingWindows: ISizedWindow[];
+}

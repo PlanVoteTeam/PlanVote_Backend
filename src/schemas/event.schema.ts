@@ -36,4 +36,8 @@ export const EventSchema = new mongoose.Schema<IEvent>({
       ],
     },
   ],
+  step: {
+    _id: Schema.Types.String,
+    stepDate: Schema.Types.Date,
+  },
 });

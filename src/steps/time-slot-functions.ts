@@ -5,10 +5,7 @@ import {
   IDay,
   ISizedWindow,
 } from './interfaces/steps.interface';
-import {
-  ERROR_CODE_STEP_TOO_MUCH_DAYS,
-  ERROR_MESSAGE_STEP_TOO_MUCH_DAYS,
-} from './steps.error';
+import { StepsErrors } from './steps.error';
 
 export class TimeSlotFunctions {
   private minPeople = 0;
@@ -29,39 +26,6 @@ export class TimeSlotFunctions {
     this.maxDuration = maxDuration;
   }
 
-  public mockTimeSlots = [
-    {
-      _id: '',
-      startDate: new Date('2023-03-24T00:00:00.000Z'),
-      endDate: new Date('2023-04-03T00:00:00.000Z'),
-      idParticipant: '6407178d4369fc304edf2fe1',
-    },
-    {
-      _id: '',
-      startDate: new Date('2023-04-07T00:00:00.000Z'),
-      endDate: new Date('2023-04-10T00:00:00.000Z'),
-      idParticipant: '6407178d4369fc304edf2fe1',
-    },
-    {
-      _id: '',
-      startDate: new Date('2023-03-26T00:00:00.000Z'),
-      endDate: new Date('2023-04-10T00:00:00.000Z'),
-      idParticipant: '6422b32ec31cd18db1e5ff4d',
-    },
-    {
-      _id: '',
-      startDate: new Date('2023-03-24T00:00:00.000Z'),
-      endDate: new Date('2023-03-25T00:00:00.000Z'),
-      idParticipant: '6422b32ec31cd18db1e5ff4d',
-    },
-    {
-      _id: '',
-      startDate: new Date('2023-03-24T00:00:00.000Z'),
-      endDate: new Date('2023-03-30T00:00:00.000Z'),
-      idParticipant: '6422b32ec31cd18db1e5ff4f',
-    },
-  ];
-
   public main() {
     this.timeSlots.sort(
       (a, b) => a.startDate.getTime() - b.startDate.getTime(),
@@ -80,8 +44,8 @@ export class TimeSlotFunctions {
     if ((endDate.getTime() - startDate.getTime()) / 86400000 > 1000) {
       throw new PayloadTooLargeException({
         sucess: false,
-        errorCode: ERROR_CODE_STEP_TOO_MUCH_DAYS,
-        errorMessage: ERROR_MESSAGE_STEP_TOO_MUCH_DAYS,
+        errorCode: StepsErrors.ERROR_CODE_STEP_TOO_MUCH_DAYS,
+        errorMessage: StepsErrors.ERROR_MESSAGE_STEP_TOO_MUCH_DAYS,
       });
     }
 

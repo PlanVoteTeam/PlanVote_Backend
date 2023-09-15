@@ -1,4 +1,5 @@
 import { IParticipant } from './participant.interface';
+import { IStepReference } from './step-reference.interface';
 
 export interface IEvent {
   _id?: string;
@@ -7,4 +8,5 @@ export interface IEvent {
   minDuration: number;
   maxDuration: number;
   participants?: IParticipant[];
+  step?: IStepReference;
 }
