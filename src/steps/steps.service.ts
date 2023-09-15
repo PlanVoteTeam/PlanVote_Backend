@@ -127,7 +127,22 @@ export class StepsService {
   }
 
   async deleteStep(stepId: string) {
-    const deleteCount = await this.stepModel.deleteOne({ _id: stepId });
-    return deleteCount;
+    const result = await this.stepModel.deleteOne({ _id: stepId });
+    return result;
+  }
+
+  async findOne(stepId: string): Promise<IStep> {
+    const stepFound: IStep = await this.stepModel.findById(stepId);
+    if (!stepFound) {
+      throw new NotFoundException({
+        errorCode: StepsErrors.ERROR_CODE_NOT_FOUND,
+        errorMessage: StepsErrors.ERROR_MESSAGE_NOT_FOUND,
+      });
+    }
+    return {
+      _id: stepFound._id,
+      bestDestinations: stepFound.bestDestinations,
+      glidingWindows: stepFound.glidingWindows,
+    };
   }
 }

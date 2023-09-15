@@ -10,4 +10,7 @@ export enum StepsErrors {
 
   ERROR_CODE_CANT_PROCESS_AVG = 'CANT_PROCESS_AVG',
   ERROR_MESSAGE_CANT_PROCESS_AVG = 'There was an error processing the best averages detinations. Please check that there are destinations and that some votes have been submitted',
+
+  ERROR_CODE_NOT_FOUND = 'STEP_NOT_FOUND',
+  ERROR_MESSAGE_NOT_FOUND = 'Step not found',
 }

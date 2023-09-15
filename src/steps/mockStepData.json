@@ -1,0 +1,575 @@
+{
+  "findBestOptions": {
+    "participantCount": 3,
+    "event": {
+      "_id": "123",
+      "name": "test_data_name",
+      "description": "test_data_description",
+      "minDuration": 7,
+      "maxDuration": 7,
+      "participants": [
+        {
+          "_id": "1",
+          "name": "test_data_participant_name1",
+          "destinations": [
+            {
+              "name": "test_data_destination_name1",
+              "votes": [
+                {
+                  "participantId": "1",
+                  "note": 5
+                },
+                {
+                  "participantId": "2",
+                  "note": 5
+                },
+                {
+                  "participantId": "3",
+                  "note": 5
+                }
+              ]
+            }
+          ],
+          "timeSlots": [
+            {
+              "startDate": "2024-03-27T00:00:00.000Z",
+              "endDate": "2024-04-10T00:00:00.000Z"
+            }
+          ]
+        },
+        {
+          "_id": "2",
+          "name": "test_data_participant_name2",
+          "destinations": [
+            {
+              "name": "test_data_destination_name2",
+              "votes": [
+                {
+                  "participantId": "1",
+                  "note": 1
+                },
+                {
+                  "participantId": "2",
+                  "note": 2
+                },
+                {
+                  "participantId": "3",
+                  "note": 2
+                }
+              ]
+            },
+            {
+              "name": "test_data_destination_name3",
+              "votes": [
+                {
+                  "participantId": "1",
+                  "note": 4
+                },
+                {
+                  "participantId": "2",
+                  "note": 5
+                },
+                {
+                  "participantId": "3",
+                  "note": 3
+                }
+              ]
+            }
+          ],
+          "timeSlots": [
+            {
+              "startDate": "2024-03-25T00:00:00.000Z",
+              "endDate": "2024-04-15T00:00:00.000Z"
+            }
+          ]
+        },
+        {
+          "_id": "3",
+          "name": "test_data_participant_name3",
+          "destinations": [
+            {
+              "name": "test_data_destination_name4",
+              "votes": [
+                {
+                  "participantId": "1",
+                  "note": 3
+                },
+                {
+                  "participantId": "2",
+                  "note": 2
+                },
+                {
+                  "participantId": "3",
+                  "note": 5
+                }
+              ]
+            },
+            {
+              "name": "test_data_destination_name5",
+              "votes": [
+                {
+                  "participantId": "1",
+                  "note": 4
+                },
+                {
+                  "participantId": "2",
+                  "note": 4
+                },
+                {
+                  "participantId": "3",
+                  "note": 4
+                }
+              ]
+            }
+          ],
+          "timeSlots": [
+            {
+              "startDate": "2024-03-30T00:00:00.000Z",
+              "endDate": "2024-04-08T00:00:00.000Z"
+            }
+          ]
+        }
+      ],
+      "step": {
+        "_id": "0",
+        "stepDate": "2023-09-15T00:00:00.000Z"
+      }
+    },
+    "eventUpdated": {
+      "_id": "123",
+      "name": "test_data_name",
+      "description": "test_data_description",
+      "minDuration": 7,
+      "maxDuration": 7,
+      "participants": [
+        {
+          "_id": "1",
+          "name": "test_data_participant_name1",
+          "destinations": [
+            {
+              "name": "test_data_destination_name1",
+              "votes": [
+                {
+                  "participantId": "1",
+                  "note": 5
+                },
+                {
+                  "participantId": "2",
+                  "note": 5
+                },
+                {
+                  "participantId": "3",
+                  "note": 5
+                }
+              ]
+            }
+          ],
+          "timeSlots": [
+            {
+              "startDate": "2024-03-27T00:00:00.000Z",
+              "endDate": "2024-04-10T00:00:00.000Z"
+            }
+          ]
+        },
+        {
+          "_id": "2",
+          "name": "test_data_participant_name2",
+          "destinations": [
+            {
+              "name": "test_data_destination_name2",
+              "votes": [
+                {
+                  "participantId": "1",
+                  "note": 1
+                },
+                {
+                  "participantId": "2",
+                  "note": 2
+                },
+                {
+                  "participantId": "3",
+                  "note": 2
+                }
+              ]
+            },
+            {
+              "name": "test_data_destination_name3",
+              "votes": [
+                {
+                  "participantId": "1",
+                  "note": 4
+                },
+                {
+                  "participantId": "2",
+                  "note": 5
+                },
+                {
+                  "participantId": "3",
+                  "note": 3
+                }
+              ]
+            }
+          ],
+          "timeSlots": [
+            {
+              "startDate": "2024-03-25T00:00:00.000Z",
+              "endDate": "2024-04-15T00:00:00.000Z"
+            }
+          ]
+        },
+        {
+          "_id": "3",
+          "name": "test_data_participant_name3",
+          "destinations": [
+            {
+              "name": "test_data_destination_name4",
+              "votes": [
+                {
+                  "participantId": "1",
+                  "note": 3
+                },
+                {
+                  "participantId": "2",
+                  "note": 2
+                },
+                {
+                  "participantId": "3",
+                  "note": 5
+                }
+              ]
+            },
+            {
+              "name": "test_data_destination_name5",
+              "votes": [
+                {
+                  "participantId": "1",
+                  "note": 4
+                },
+                {
+                  "participantId": "2",
+                  "note": 4
+                },
+                {
+                  "participantId": "3",
+                  "note": 4
+                }
+              ]
+            }
+          ],
+          "timeSlots": [
+            {
+              "startDate": "2024-03-30T00:00:00.000Z",
+              "endDate": "2024-04-08T00:00:00.000Z"
+            }
+          ]
+        }
+      ],
+      "step": {
+        "_id": "1",
+        "stepDate": "2023-09-16T00:00:00.000Z"
+      }
+    },
+    "timeSlots": [
+      {
+        "_id": {
+        },
+        "idParticipant": {
+        },
+        "startDate": "2024-03-27T00:00:00.000Z",
+        "endDate": "2024-04-10T00:00:00.000Z"
+      },
+      {
+        "_id": {
+        },
+        "idParticipant": {
+        },
+        "startDate": "2024-03-25T00:00:00.000Z",
+        "endDate": "2024-04-15T00:00:00.000Z"
+      },
+      {
+        "_id": {
+        },
+        "idParticipant": {
+        },
+        "startDate": "2024-03-30T00:00:00.000Z",
+        "endDate": "2024-04-08T00:00:00.000Z"
+      }
+    ],
+    "rankedTimeSlots": [
+      {
+        "size": 10,
+        "maxCommonUser": 2,
+        "windows": [
+          {
+            "id": 2,
+            "startDate": "2024-03-27T00:00:00.000Z",
+            "endDate": "2024-04-05T00:00:00.000Z",
+            "commonUsers": [
+              {
+              },
+              {
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "startDate": "2024-03-28T00:00:00.000Z",
+            "endDate": "2024-04-06T00:00:00.000Z",
+            "commonUsers": [
+              {
+              },
+              {
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "startDate": "2024-03-29T00:00:00.000Z",
+            "endDate": "2024-04-07T00:00:00.000Z",
+            "commonUsers": [
+              {
+              },
+              {
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "startDate": "2024-03-30T00:00:00.000Z",
+            "endDate": "2024-04-08T00:00:00.000Z",
+            "commonUsers": [
+              {
+              },
+              {
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "startDate": "2024-03-31T00:00:00.000Z",
+            "endDate": "2024-04-09T00:00:00.000Z",
+            "commonUsers": [
+              {
+              },
+              {
+              }
+            ]
+          },
+          {
+            "id": 0,
+            "startDate": "2024-03-25T00:00:00.000Z",
+            "endDate": "2024-04-03T00:00:00.000Z",
+            "commonUsers": [
+              {
+              }
+            ]
+          },
+          {
+            "id": 1,
+            "startDate": "2024-03-26T00:00:00.000Z",
+            "endDate": "2024-04-04T00:00:00.000Z",
+            "commonUsers": [
+              {
+              }
+            ]
+          },
+          {
+            "id": 7,
+            "startDate": "2024-04-01T00:00:00.000Z",
+            "endDate": "2024-04-10T00:00:00.000Z",
+            "commonUsers": [
+              {
+              }
+            ]
+          },
+          {
+            "id": 8,
+            "startDate": "2024-04-02T00:00:00.000Z",
+            "endDate": "2024-04-11T00:00:00.000Z",
+            "commonUsers": [
+              {
+              }
+            ]
+          },
+          {
+            "id": 9,
+            "startDate": "2024-04-03T00:00:00.000Z",
+            "endDate": "2024-04-12T00:00:00.000Z",
+            "commonUsers": [
+              {
+              }
+            ]
+          },
+          {
+            "id": 10,
+            "startDate": "2024-04-04T00:00:00.000Z",
+            "endDate": "2024-04-13T00:00:00.000Z",
+            "commonUsers": [
+              {
+              }
+            ]
+          },
+          {
+            "id": 11,
+            "startDate": "2024-04-05T00:00:00.000Z",
+            "endDate": "2024-04-14T00:00:00.000Z",
+            "commonUsers": [
+              {
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "bestDestinations":[
+      {
+        "_id": { 
+        },
+        "name": "test_data_destination_name1",
+        "avgNote": 5
+      },
+      {
+        "_id": {
+        },
+        "name": "test_data_destination_name3",
+        "avgNote": 4
+      },
+      {
+        "_id": {
+        },
+        "name": "test_data_destination_name5",
+        "avgNote": 4
+      }
+    ],
+    "stepCreated": {
+      "bestDestinations": [
+          {
+              "_id": "65046bddf40ed1118b80cf24",
+              "name": "test_data_destination_name1",
+              "avgNote": 5
+          },
+          {
+              "_id": "65046c0ef40ed1118b80cf39",
+              "name": "test_data_destination_name3",
+              "avgNote": 4
+          },
+          {
+              "_id": "65046c27f40ed1118b80cf52",
+              "name": "test_data_destination_name5",
+              "avgNote": 4
+          }
+      ],
+      "glidingWindows": [
+          {
+              "size": 10,
+              "maxCommonUser": 2,
+              "windows": [
+                  {
+                      "commonUsers": [
+                          "65046a18f40ed1118b80cefd",
+                          "65046a13f40ed1118b80cef9"
+                      ],
+                      "startDate": "2024-03-27T00:00:00.000Z",
+                      "endDate": "2024-04-05T00:00:00.000Z",
+                      "_id": "65047220f40ed1118b80d0a3"
+                  },
+                  {
+                      "commonUsers": [
+                          "65046a18f40ed1118b80cefd",
+                          "65046a13f40ed1118b80cef9"
+                      ],
+                      "startDate": "2024-03-28T00:00:00.000Z",
+                      "endDate": "2024-04-06T00:00:00.000Z",
+                      "_id": "65047220f40ed1118b80d0a4"
+                  },
+                  {
+                      "commonUsers": [
+                          "65046a18f40ed1118b80cefd",
+                          "65046a13f40ed1118b80cef9"
+                      ],
+                      "startDate": "2024-03-29T00:00:00.000Z",
+                      "endDate": "2024-04-07T00:00:00.000Z",
+                      "_id": "65047220f40ed1118b80d0a5"
+                  },
+                  {
+                      "commonUsers": [
+                          "65046a18f40ed1118b80cefd",
+                          "65046a13f40ed1118b80cef9"
+                      ],
+                      "startDate": "2024-03-30T00:00:00.000Z",
+                      "endDate": "2024-04-08T00:00:00.000Z",
+                      "_id": "65047220f40ed1118b80d0a6"
+                  },
+                  {
+                      "commonUsers": [
+                          "65046a18f40ed1118b80cefd",
+                          "65046a13f40ed1118b80cef9"
+                      ],
+                      "startDate": "2024-03-31T00:00:00.000Z",
+                      "endDate": "2024-04-09T00:00:00.000Z",
+                      "_id": "65047220f40ed1118b80d0a7"
+                  },
+                  {
+                      "commonUsers": [
+                          "65046a18f40ed1118b80cefd"
+                      ],
+                      "startDate": "2024-03-25T00:00:00.000Z",
+                      "endDate": "2024-04-03T00:00:00.000Z",
+                      "_id": "65047220f40ed1118b80d0a8"
+                  },
+                  {
+                      "commonUsers": [
+                          "65046a18f40ed1118b80cefd"
+                      ],
+                      "startDate": "2024-03-26T00:00:00.000Z",
+                      "endDate": "2024-04-04T00:00:00.000Z",
+                      "_id": "65047220f40ed1118b80d0a9"
+                  },
+                  {
+                      "commonUsers": [
+                          "65046a18f40ed1118b80cefd"
+                      ],
+                      "startDate": "2024-04-01T00:00:00.000Z",
+                      "endDate": "2024-04-10T00:00:00.000Z",
+                      "_id": "65047220f40ed1118b80d0aa"
+                  },
+                  {
+                      "commonUsers": [
+                          "65046a18f40ed1118b80cefd"
+                      ],
+                      "startDate": "2024-04-02T00:00:00.000Z",
+                      "endDate": "2024-04-11T00:00:00.000Z",
+                      "_id": "65047220f40ed1118b80d0ab"
+                  },
+                  {
+                      "commonUsers": [
+                          "65046a18f40ed1118b80cefd"
+                      ],
+                      "startDate": "2024-04-03T00:00:00.000Z",
+                      "endDate": "2024-04-12T00:00:00.000Z",
+                      "_id": "65047220f40ed1118b80d0ac"
+                  },
+                  {
+                      "commonUsers": [
+                          "65046a18f40ed1118b80cefd"
+                      ],
+                      "startDate": "2024-04-04T00:00:00.000Z",
+                      "endDate": "2024-04-13T00:00:00.000Z",
+                      "_id": "65047220f40ed1118b80d0ad"
+                  },
+                  {
+                      "commonUsers": [
+                          "65046a18f40ed1118b80cefd"
+                      ],
+                      "startDate": "2024-04-05T00:00:00.000Z",
+                      "endDate": "2024-04-14T00:00:00.000Z",
+                      "_id": "65047220f40ed1118b80d0ae"
+                  }
+              ],
+              "_id": "65047220f40ed1118b80d0a2"
+          }
+      ],
+      "_id": "65047220f40ed1118b80d0a1"
+    }
+  }
+}
