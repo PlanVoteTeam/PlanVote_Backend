@@ -1,17 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import { BadRequestException } from '@nestjs/common/exceptions';
+import {
+  BadRequestException,
+  NotFoundException,
+} from '@nestjs/common/exceptions';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { IEvent } from 'src/events/interfaces/event.interface';
 import { IParticipant } from 'src/events/interfaces/participant.interface';
 import { ITimeSlot } from 'src/events/interfaces/time-slot.interface';
 import { CreateTimeSlotDto } from './dto/create-time-slot.dto';
 import { UpdateTimeSlotDto } from './dto/update-time-slot.dto';
 import {
+  ERROR_CODE_EVENT_OR_PARTICIPANT_NOT_FOUND,
   ERROR_CODE_INVALID_DATE_TIME_SLOT,
   ERROR_CODE_MISSING_DATE_TIME_SLOT,
 } from './time-slot.error-code';
 import {
+  ERROR_MESSAGE_EVENT_OR_PARTICIPANT_NOT_FOUND,
   ERROR_MESSAGE_INVALID_DATE_TIME_SLOT,
   ERROR_MESSAGE_MISSING_DATE_TIME_SLOT,
 } from './time-slot.error-message';
@@ -51,9 +56,6 @@ export class TimeSlotService {
       },
     );
 
-    console.log(timeSlotCreated.participants[0]._id);
-    console.log(participantId);
-
     const timeSlots = timeSlotCreated.participants.filter(
       (participant: IParticipant) =>
         participant._id.toString() === participantId,
@@ -63,12 +65,44 @@ export class TimeSlotService {
   }
 
   async findAll(eventId: string, participantId: string): Promise<ITimeSlot[]> {
-    const eventFound = await this.eventModel.findOne({
-      _id: eventId,
-      'participants._id': participantId,
-    });
+    interface ITimeSlotFound {
+      _id: string;
+      timeSlots: ITimeSlot[];
+    }
 
-    return eventFound.participants[0].timeSlots;
+    const timeslotsFound: any = await this.eventModel.aggregate([
+      {
+        $match: {
+          _id: new mongoose.Types.ObjectId(eventId),
+        },
+      },
+      {
+        $unwind: '$participants',
+      },
+      {
+        $match: {
+          'participants._id': new mongoose.Types.ObjectId(participantId),
+        },
+      },
+      {
+        $project: {
+          timeSlots: '$participants.timeSlots',
+        },
+      },
+    ]);
+    if (timeslotsFound.length > 0) {
+      if (timeslotsFound[0].timeSlots.length > 0) {
+        return timeslotsFound[0].timeSlots;
+      } else {
+        return [];
+      }
+    } else {
+      throw new NotFoundException({
+        success: false,
+        errorCode: ERROR_CODE_EVENT_OR_PARTICIPANT_NOT_FOUND,
+        errorMessage: ERROR_MESSAGE_EVENT_OR_PARTICIPANT_NOT_FOUND,
+      });
+    }
   }
 
   findOne(id: number) {
