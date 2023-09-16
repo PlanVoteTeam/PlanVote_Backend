@@ -40,6 +40,21 @@ export class StepsController {
       event.minDuration,
       event.maxDuration,
     );
+    // limit options to the number where most participants are.
+    if (timeRanges && timeRanges[0].windows.length > 3) {
+      const oldWindows = timeRanges[0].windows.filter(
+        (win) => win.commonUsers.length === timeRanges[0].maxCommonUser,
+      );
+      timeRanges[0].windows = [];
+      for (let i = 0; i < 3; i++) {
+        if (oldWindows[i]) {
+          timeRanges[0].windows.push(oldWindows[i]);
+        } else {
+          break;
+        }
+      }
+    }
+
     const destinationsAvg = await this.stepsService.findDestinationAvg(eventId);
     if (destinationsAvg.length === 0) {
       throw new UnprocessableEntityException({
