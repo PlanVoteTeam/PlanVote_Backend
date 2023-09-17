@@ -1,15 +1,6 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { TimeSlotService } from './time-slot.service';
 import { CreateTimeSlotDto } from './dto/create-time-slot.dto';
-import { UpdateTimeSlotDto } from './dto/update-time-slot.dto';
 
 @Controller('events/:eventId/participants/:participantId/timeSlots')
 export class TimeSlotController {
@@ -34,19 +25,6 @@ export class TimeSlotController {
     @Param('participantId') participantId: string,
   ) {
     return this.timeSlotService.findAll(eventId, participantId);
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.timeSlotService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateTimeSlotDto: UpdateTimeSlotDto,
-  ) {
-    return this.timeSlotService.update(+id, updateTimeSlotDto);
   }
 
   @Delete(':id')
