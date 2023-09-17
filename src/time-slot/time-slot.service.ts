@@ -7,9 +7,11 @@ import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
 import { IEvent } from 'src/events/interfaces/event.interface';
 import { IParticipant } from 'src/events/interfaces/participant.interface';
-import { ITimeSlot } from 'src/events/interfaces/time-slot.interface';
+import {
+  ITimeSlot,
+  ITimeSlotFound,
+} from 'src/events/interfaces/time-slot.interface';
 import { CreateTimeSlotDto } from './dto/create-time-slot.dto';
-import { UpdateTimeSlotDto } from './dto/update-time-slot.dto';
 import {
   ERROR_CODE_EVENT_OR_PARTICIPANT_NOT_FOUND,
   ERROR_CODE_INVALID_DATE_TIME_SLOT,
@@ -55,7 +57,6 @@ export class TimeSlotService {
         new: true,
       },
     );
-
     const timeSlots = timeSlotCreated.participants.filter(
       (participant: IParticipant) =>
         participant._id.toString() === participantId,
@@ -65,12 +66,7 @@ export class TimeSlotService {
   }
 
   async findAll(eventId: string, participantId: string): Promise<ITimeSlot[]> {
-    interface ITimeSlotFound {
-      _id: string;
-      timeSlots: ITimeSlot[];
-    }
-
-    const timeslotsFound: any = await this.eventModel.aggregate([
+    const timeslotsFound: ITimeSlotFound[] = await this.eventModel.aggregate([
       {
         $match: {
           _id: new mongoose.Types.ObjectId(eventId),
@@ -105,15 +101,11 @@ export class TimeSlotService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} timeSlot`;
-  }
-
-  update(id: number, updateTimeSlotDto: UpdateTimeSlotDto) {
-    return `This action updates a #${id} timeSlot`;
-  }
-
-  async remove(eventId: string, participantId: string, timeSlotId: string) {
+  async remove(
+    eventId: string,
+    participantId: string,
+    timeSlotId: string,
+  ): Promise<IEvent> {
     const eventUpdated = await this.eventModel.findOneAndUpdate(
       {
         _id: eventId,
@@ -129,6 +121,14 @@ export class TimeSlotService {
       },
     );
 
-    return eventUpdated;
+    return {
+      _id: eventUpdated._id,
+      name: eventUpdated.name,
+      description: eventUpdated.description,
+      minDuration: eventUpdated.minDuration,
+      maxDuration: eventUpdated.maxDuration,
+      participants: eventUpdated.participants,
+      step: eventUpdated.step,
+    };
   }
 }
