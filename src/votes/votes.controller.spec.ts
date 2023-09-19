@@ -50,7 +50,7 @@ describe('VotesController', () => {
         note: 5,
       };
       jest.spyOn(service, 'create').mockResolvedValue(createVoteDto);
-      jest.spyOn(service, 'find').mockResolvedValueOnce(null);
+      jest.spyOn(service, 'find').mockResolvedValueOnce([]);
       jest.spyOn(service, 'find').mockResolvedValueOnce(result);
 
       expect(
