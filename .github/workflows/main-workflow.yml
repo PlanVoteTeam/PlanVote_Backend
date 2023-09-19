@@ -120,7 +120,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: Run tests
-        run: yarn test:cov
+        run: yarn test:e2e
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:

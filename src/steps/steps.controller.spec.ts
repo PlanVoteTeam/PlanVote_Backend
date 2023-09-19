@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { StepsController } from './steps.controller';
 import { getModelToken } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { EventsService } from 'src/events/events.service';
+import { EventsService } from '../../src/events/events.service';
 import { StepsService } from './steps.service';
 import * as mockdata from './mockStepData.json';
 

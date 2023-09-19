@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { StepsService } from './steps.service';
 import { IStep, ITimeSlot } from './interfaces/steps.interface';
-import { EventsService } from 'src/events/events.service';
+import { EventsService } from '../../src/events/events.service';
 import { IEvent } from 'src/events/interfaces/event.interface';
 import { StepsErrors } from './steps.error';
 import { UpdateEventDto } from 'src/events/dto/update-event.dto';
