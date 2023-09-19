@@ -5,7 +5,7 @@ import helmet from 'helmet';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     cors: {
-      origin: ['http://localhost:5173', 'https://planvote.netlify.app/'],
+      origin: 'https://planvote.netlify.app/',
       methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
       allowedHeaders: [
         'Content-Type',
