@@ -24,7 +24,7 @@ import { StepsModule } from './steps/steps.module';
     }),
     ThrottlerModule.forRoot([
       {
-        ttl: 60000,
+        ttl: 1000,
         limit: 50,
       },
     ]),
